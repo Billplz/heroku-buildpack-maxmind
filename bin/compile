@@ -14,6 +14,7 @@ fi
 
 MAXMIND_KEY=`cat $ENV_DIR/MAXMIND_KEY`
 MAXMIND_EDITIONS=`cat $ENV_DIR/MAXMIND_EDITIONS`
+MAXMIND_CACHE_HOUR=${MAXMIND_CACHE_HOUR:-'-24 hours'}
 
 mkdir -p $CACHE_DIR
 
@@ -26,7 +27,7 @@ download(){
 
 	if [ -f $DB ]; then
 		if [ -f $LAST ]; then
-			touch -d '-24 hours' limit
+			touch -d "$MAXMIND_CACHE_HOUR" limit
 
 			if [ limit -nt $LAST ]; then
 				echo "-----> $EDITION: Database is older than a week, clearing cache."
